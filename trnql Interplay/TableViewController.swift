@@ -65,15 +65,15 @@ class TableViewController: UITableViewController, TrnqlDelegate {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
-        
-        if !NSUserDefaults.standardUserDefaults().boolForKey("hasDisplayedSplashScreen") {
-            
-            if let vc = self.storyboard?.instantiateViewControllerWithIdentifier("SplashScreen") {
-                self.presentViewController(vc, animated: true, completion: nil)
-            }
-        }
-    }
+//    override func viewDidAppear(animated: Bool) {
+//        
+//        if !NSUserDefaults.standardUserDefaults().boolForKey("hasDisplayedSplashScreen") {
+//            
+//            if let vc = self.storyboard?.instantiateViewControllerWithIdentifier("SplashScreen") {
+//                self.presentViewController(vc, animated: true, completion: nil)
+//            }
+//        }
+//    }
     
     func reloadData() {
         trnql.stopAllServices()
@@ -176,7 +176,8 @@ class TableViewController: UITableViewController, TrnqlDelegate {
         
         let streetMapsUrl = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=\(lat),\(lon)&key=\(googleAPIKey)&fov=90&heading=150&pitch=10"
         if let data = NSData(contentsOfURL: NSURL(string: streetMapsUrl)!) {
-            if data.length > 5000 {
+            // The Google Street View Image API will return a placeholder image stating "Sorry we have no imagery here" if no images are available. This placeholder image is around 5000 bytes but has fluctuated slightly. Real place images are much larger. To be safe we are making sure that the image received is at least 7500 bytes which would indiciate that it most likely is a real place image.
+            if data.length > 7500 {
                 return UIImage(data: data)
             }
         }
