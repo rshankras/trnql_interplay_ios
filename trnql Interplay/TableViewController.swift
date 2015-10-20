@@ -45,6 +45,11 @@ class TableViewController: UITableViewController, TrnqlDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        trnql.setAPIKey("INSERT_YOUR_KEY_HERE") // You can register for a trnql API Key here: http://appserver.trnql.com:9090/developer_dashboard/dashboard.jsp
+        
+        let backItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backItem
+        
         currentAddressLabel.text = "Updating location..."
         temperatureLabel.text = "Updating weather..."
         sunriseSunsetTimeLabel.text = "Updating weather..."
@@ -136,8 +141,8 @@ class TableViewController: UITableViewController, TrnqlDelegate {
 
             }
             
-            if let earth = address?.getLocality() {
-                self.title = "You are in \(earth)"
+            if let locality = address?.getLocality() {
+                self.title = "You are in \(locality)"
             }
             
             self.tableView.reloadData()
