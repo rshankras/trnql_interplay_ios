@@ -8,6 +8,7 @@
 
 import UIKit
 import trnql
+import CoreLocation
 
 extension NSDate {
     func hoursFrom(date:NSDate) -> Int{
@@ -32,6 +33,23 @@ class TableViewController: UITableViewController, TrnqlDelegate {
     @IBOutlet weak var temperatureImageIcon: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     
+    @IBOutlet weak var restaurantNameLabel: UILabel!
+    @IBOutlet weak var restaurantDistanceLabel: UILabel!
+    @IBOutlet weak var foodImageLeft: UIImageView!
+    @IBOutlet weak var foodImageRight: UIImageView!
+    @IBOutlet weak var foodImageCenter: UIImageView!
+    @IBOutlet weak var restaurantAddressLabel: UILabel!
+    
+
+    @IBOutlet weak var poiNameLabel: UILabel!
+    @IBOutlet weak var poiDistanceLabel: UILabel!
+    @IBOutlet weak var gasImageLeft: UIImageView!
+    @IBOutlet weak var gasImageRight: UIImageView!
+    @IBOutlet weak var gasImageCenter: UIImageView!
+    @IBOutlet weak var poiAddressLabel: UILabel!
+    
+    @IBOutlet weak var numberOfPlacesFound: UIButton!
+    
     @IBOutlet weak var sunriseSunsetTimeLabel: UILabel!
     
     let trnql = Trnql.sharedInstance
@@ -41,6 +59,9 @@ class TableViewController: UITableViewController, TrnqlDelegate {
     var currentLocation: LocationEntry?
     var currentActivity: ActivityEntry?
     var currentWeather: WeatherEntry?
+    var currentRestaurant: PlaceEntry?
+    var currentOtherPOI: PlaceEntry?
+    var currentPlaces: [PlaceEntry]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,15 +75,36 @@ class TableViewController: UITableViewController, TrnqlDelegate {
         temperatureLabel.text = "Updating weather..."
         sunriseSunsetTimeLabel.text = "Updating weather..."
         
-        self.navigationController?.navigationBar.translucent = false
+        let imageCornerRadius:CGFloat = 10
+        foodImageLeft.layer.cornerRadius = imageCornerRadius
+        foodImageCenter.layer.cornerRadius = imageCornerRadius
+        foodImageRight.layer.cornerRadius = imageCornerRadius
+        gasImageLeft.layer.cornerRadius = imageCornerRadius
+        gasImageCenter.layer.cornerRadius = imageCornerRadius
+        gasImageRight.layer.cornerRadius = imageCornerRadius
+        
+        restaurantNameLabel.text = "Searching for places..."
+        restaurantDistanceLabel.text = ""
+        foodImageLeft.hidden = true
+        foodImageCenter.hidden = true
+        foodImageRight.hidden = true
+        poiNameLabel.text = "Searching for places..."
+        poiDistanceLabel.text = ""
+        gasImageLeft.hidden = true
+        gasImageCenter.hidden = true
+        gasImageRight.hidden = true
+        
+        navigationController?.navigationBar.translucent = false
         
         trnql.delegate = self
+        trnql.setIncludingPlaceImages(true)
+        trnql.setPlaceTypeFilters([.RESTAURANT, .GAS_STATION, .ATM, .GROCERY_OR_SUPERMARKET, .PARKING, .PARK])
         trnql.startAllServices() // Starts all services
         
         updateLocationBanner(UIImage(named: "earth")!)
         
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: Selector("reloadData"), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: Selector("reloadData"), forControlEvents: UIControlEvents.ValueChanged)
         
         updateLocationCardUI(nil)
         updateActivityCardUI(nil)
@@ -257,7 +299,7 @@ class TableViewController: UITableViewController, TrnqlDelegate {
     }
     
     func updateWeatherCardUIs(weatherEntry: WeatherEntry?) {
-        
+
         dispatch_async(dispatch_get_main_queue(), {
             if let weatherEntry = weatherEntry {
                 
@@ -299,47 +341,34 @@ class TableViewController: UITableViewController, TrnqlDelegate {
                 }
                 
                 // Determine sunrise/sunset time
-                let calendar = NSCalendar.currentCalendar()
-                let nowComponents = calendar.components([NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: NSDate())
-                
-                if let nowTime = calendar.dateFromComponents(nowComponents) {
+                if let sunrise = weatherEntry.getSunriseTime(), sunset = weatherEntry.getSunsetTime() {
                     
-                    if let sunriseDate = weatherEntry.getSunriseTime() {
-                        
-                        let sunriseComponents = calendar.components([NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: sunriseDate)
-                        if let sunriseTime = calendar.dateFromComponents(sunriseComponents) {
-                            
-                            if sunriseTime.compare(nowTime) == NSComparisonResult.OrderedDescending {
-                                
-                                let timeRemainingComponents = calendar.components([NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: nowTime, toDate: sunriseTime, options: [])
-                                let hours = timeRemainingComponents.hour != 1 ? "\(timeRemainingComponents.hour) hours" : "\(timeRemainingComponents.hour) hour"
-                                let minutes = timeRemainingComponents.minute != 1 ? "\(timeRemainingComponents.minute) minutes" : "\(timeRemainingComponents.minute) minutes"
-                                self.sunriseSunsetTimeLabel.text = "There are \(hours) and \(minutes) until sunrise"
-                                return
-                            }
+                    let now = NSDate()
+                    let calendar = NSCalendar.currentCalendar()
+                    
+                    if sunrise.compare(now) == NSComparisonResult.OrderedDescending {
+                        let timeRemaining = calendar.components([NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: now, toDate: sunrise, options: [])
+                        self.sunriseSunsetTimeLabel.text = "\(timeRemaining.hour) \(timeRemaining.hour != 1 ? "Hours" : "Hour"), \(timeRemaining.minute) \(timeRemaining.minute != 1 ? "Minutes" : "Minute") Until Sunrise"
+                    }
+                    else if sunrise.compare(now) == NSComparisonResult.OrderedSame{
+                        self.sunriseSunsetTimeLabel.text = "The sunrise is now!"
+                    }
+                    else if sunset.compare(now) == NSComparisonResult.OrderedDescending {
+                        let timeRemaining = calendar.components([NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: now, toDate: sunset, options: [])
+                        self.sunriseSunsetTimeLabel.text = "\(timeRemaining.hour) \(timeRemaining.hour != 1 ? "Hours" : "Hour"), \(timeRemaining.minute) \(timeRemaining.minute != 1 ? "Minutes" : "Minute") Until Sunset"
+                    }
+                    else if sunset.compare(now) == NSComparisonResult.OrderedSame{
+                        self.sunriseSunsetTimeLabel.text = "The sunset is now!"
+                    }
+                    else if sunset.compare(now) == NSComparisonResult.OrderedAscending {
+                        if let sunsetTime = weatherEntry.getSunsetAsString() {
+                            self.sunriseSunsetTimeLabel.text = "The sunset was at \(sunsetTime)."
+                        }
+                        else {
+                            self.sunriseSunsetTimeLabel.text = "The sunset has passed."
                         }
                     }
-                    
-                    if let sunsetDate = weatherEntry.getSunsetTime() {
-                        
-                        let sunsetComponents = calendar.components([NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: sunsetDate)
-                        if let sunsetTime = calendar.dateFromComponents(sunsetComponents) {
-                            
-                            if sunsetTime.compare(nowTime) == NSComparisonResult.OrderedDescending {
-                                
-                                let timeRemainingComponents = calendar.components([NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: nowTime, toDate: sunsetTime, options: [])
-                                let hours = timeRemainingComponents.hour != 1 ? "\(timeRemainingComponents.hour) hours" : "\(timeRemainingComponents.hour) hour"
-                                let minutes = timeRemainingComponents.minute != 1 ? "\(timeRemainingComponents.minute) minutes" : "\(timeRemainingComponents.minute) minutes"
-                                self.sunriseSunsetTimeLabel.text = "There are \(hours) and \(minutes) until sunset"
-                                return
-                            }
-                            
-                        }
-                    }
-                    
-                    self.sunriseSunsetTimeLabel.text = "Sunrise/sunset time is unknown"
                 }
-                
             }
             else {
                 self.temperatureLabel.text = "The temperature is unknown"
@@ -351,53 +380,307 @@ class TableViewController: UITableViewController, TrnqlDelegate {
         })
     }
     
+    func updatePlaceCardUIs(places: [PlaceEntry]) {
+        
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
+            
+            if places.count > 0 {
+                
+                self.numberOfPlacesFound.setTitle("Found \(places.count) Places Nearby", forState: .Normal)
+                
+                
+                var restaurants = [PlaceEntry]()
+                var otherPOIs = [PlaceEntry]()
+                
+                for place in places {
+                    
+                    
+                    if let types = place.getTypes() {
+                        if types.contains(PlaceType.RESTAURANT) {
+                            restaurants.append(place)
+                        }
+                        else {
+                            otherPOIs.append(place)
+                        }
+                    }
+                }
+                
+                // RESTAURANT
+                if restaurants.count > 0 {
+                    
+                    var restaurant: PlaceEntry?
+                    var numOfRestaurantPhotos = 0
+                    
+                    var numberOfPhotosRequired = 2
+                    repeat {
+                        
+                        if numberOfPhotosRequired > 0 {
+                            
+                            for theRestaurant in restaurants {
+                                
+                                let numOfPhotos = theRestaurant.getImages() != nil ? theRestaurant.getImages()!.count : 0
+                                if numOfPhotos >= numberOfPhotosRequired {
+                                    restaurant = theRestaurant
+                                    numOfRestaurantPhotos = numOfPhotos
+                                    break
+                                }
+                            }
+                            numberOfPhotosRequired--
+                        }
+                        else {
+                            restaurant = restaurants[Int(arc4random_uniform(UInt32(restaurants.count)))]
+                            numOfRestaurantPhotos = 0
+                        }
+                    } while restaurant == nil
+                    
+                    if let restaurant = restaurant {
+                        
+                        self.currentRestaurant = restaurant
+                        
+                        if numOfRestaurantPhotos > 0 {
+                            
+                            let photos = restaurant.getImages()!
+                            if numOfRestaurantPhotos > 1 {
+                                
+                                let randomPhotoIndex1 = Int(arc4random_uniform(UInt32(photos.count)))
+                                var randomPhotoIndex2: Int
+                                repeat {
+                                    randomPhotoIndex2 = Int(arc4random_uniform(UInt32(photos.count)))
+                                } while randomPhotoIndex1 == randomPhotoIndex2
+                                
+                                let photo1 = photos[randomPhotoIndex1]
+                                let photo2 = photos[randomPhotoIndex2]
+                                
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    self.restaurantNameLabel.text = restaurant.getName() ?? ""
+                                    self.restaurantDistanceLabel.text = self.calculateDistance(restaurant) ?? ""
+                                    self.restaurantAddressLabel.text = restaurant.getAddress() ?? ""
+                                    self.foodImageCenter.hidden = true
+                                    self.foodImageLeft.hidden = false
+                                    self.foodImageRight.hidden = false
+                                    self.foodImageLeft.image = photo1
+                                    self.foodImageRight.image = photo2
+                                    self.tableView.reloadData()
+                                })
+                            }
+                            else {
+                                
+                                let randomPhotoIndex1 = Int(arc4random_uniform(UInt32(photos.count)))
+                                let photo1 = photos[randomPhotoIndex1]
+                                
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    self.restaurantNameLabel.text = restaurant.getName() ?? ""
+                                    self.restaurantDistanceLabel.text = self.calculateDistance(restaurant) ?? ""
+                                    self.restaurantAddressLabel.text = restaurant.getAddress() ?? ""
+                                    self.foodImageCenter.hidden = false
+                                    self.foodImageLeft.hidden = true
+                                    self.foodImageRight.hidden = true
+                                    self.foodImageCenter.image = photo1
+                                    self.tableView.reloadData()
+                                })
+                            }
+                        }
+                        else {
+                            
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.restaurantNameLabel.text = restaurant.getName() ?? ""
+                                self.restaurantDistanceLabel.text = self.calculateDistance(restaurant) ?? ""
+                                self.restaurantAddressLabel.text = restaurant.getAddress() ?? ""
+                                self.foodImageCenter.hidden = false
+                                self.foodImageLeft.hidden = true
+                                self.foodImageRight.hidden = true
+                                self.foodImageCenter.image = nil
+                                self.tableView.reloadData()
+                            })
+                        }
+                    }
+                }
+                else {
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.restaurantNameLabel.text = "Searching for places..."
+                        self.restaurantDistanceLabel.text = ""
+                        self.restaurantAddressLabel.text = ""
+                        self.foodImageCenter.hidden = true
+                        self.foodImageLeft.hidden = true
+                        self.foodImageRight.hidden = true
+                        self.tableView.reloadData()
+                    })
+                }
+                
+                // GAS STATION
+                if otherPOIs.count > 0 {
+                    
+                    var otherPOI: PlaceEntry?
+                    var numOfOtherPOIPhotos = 0
+                    
+                    var numberOfPhotosRequired = 2
+                    repeat {
+                        
+                        if numberOfPhotosRequired > 0 {
+                            
+                            for thePOI in otherPOIs {
+                                
+                                let numOfPhotos = thePOI.getImages() != nil ? thePOI.getImages()!.count : 0
+                                if numOfPhotos >= numberOfPhotosRequired {
+                                    otherPOI = thePOI
+                                    numOfOtherPOIPhotos = numOfPhotos
+                                    break
+                                }
+                            }
+                            numberOfPhotosRequired--
+                        }
+                        else {
+                            otherPOI = otherPOIs[Int(arc4random_uniform(UInt32(otherPOIs.count)))]
+                            numOfOtherPOIPhotos = 0
+                        }
+                    } while otherPOI == nil
+                    
+                    if let poi = otherPOI {
+                        
+                        self.currentOtherPOI = poi
+                        
+                        if numOfOtherPOIPhotos > 0 {
+                            
+                            let photos = poi.getImages()!
+                            if numOfOtherPOIPhotos > 1 {
+                                
+                                let randomPhotoIndex1 = Int(arc4random_uniform(UInt32(photos.count)))
+                                var randomPhotoIndex2: Int
+                                repeat {
+                                    randomPhotoIndex2 = Int(arc4random_uniform(UInt32(photos.count)))
+                                } while randomPhotoIndex1 == randomPhotoIndex2
+                                
+                                let photo1 = photos[randomPhotoIndex1]
+                                let photo2 = photos[randomPhotoIndex2]
+                                
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    self.poiNameLabel.text = poi.getName() ?? ""
+                                    self.poiDistanceLabel.text = self.calculateDistance(poi) ?? ""
+                                    self.poiAddressLabel.text = poi.getAddress() ?? ""
+                                    self.gasImageCenter.hidden = true
+                                    self.gasImageLeft.hidden = false
+                                    self.gasImageRight.hidden = false
+                                    self.gasImageLeft.image = photo1
+                                    self.gasImageRight.image = photo2
+                                    self.tableView.reloadData()
+                                })
+                            }
+                            else {
+                                
+                                let randomPhotoIndex1 = Int(arc4random_uniform(UInt32(photos.count)))
+                                let photo1 = photos[randomPhotoIndex1]
+                                
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    self.poiNameLabel.text = poi.getName() ?? ""
+                                    self.poiDistanceLabel.text = self.calculateDistance(poi) ?? ""
+                                    self.poiAddressLabel.text = poi.getAddress() ?? ""
+                                    self.gasImageCenter.hidden = false
+                                    self.gasImageLeft.hidden = true
+                                    self.gasImageRight.hidden = true
+                                    self.gasImageCenter.image = photo1
+                                    self.tableView.reloadData()
+                                })
+                            }
+                        }
+                        else {
+                            
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.poiNameLabel.text = poi.getName() ?? ""
+                                self.poiDistanceLabel.text = self.calculateDistance(poi) ?? ""
+                                self.poiAddressLabel.text = poi.getAddress() ?? ""
+                                self.gasImageCenter.hidden = false
+                                self.gasImageLeft.hidden = true
+                                self.gasImageRight.hidden = true
+                                self.gasImageCenter.image = nil
+                                self.tableView.reloadData()
+                            })
+                        }
+                    }
+                }
+                else {
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.poiNameLabel.text = ""
+                        self.poiDistanceLabel.text = ""
+                        self.poiAddressLabel.text = ""
+                        self.gasImageCenter.hidden = true
+                        self.gasImageLeft.hidden = true
+                        self.gasImageRight.hidden = true
+                        self.tableView.reloadData()
+                    })
+                }
+            }
+        })
+
+    }
+    
+    
+    func calculateDistance(place: PlaceEntry) -> String? {
+        
+        if let distance = place.getDistanceFromUser() {
+            return "\(Int(distance))m away"
+        }
+        return nil
+    }
+    
+    
     //MARK: TrnqlDelegate Methods
     
     func smartActivityChange(userActivity: ActivityEntry?, error: NSError?) {
         
-        if error == nil {
-            
+        if let userActivity = userActivity {
             currentActivity = userActivity
             updateActivityCardUI(userActivity)
         }
-        else {
-            print(error!)
+        else if let error = error {
+            print(error)
         }
         
     }
     
     func smartAddressChange(address: AddressEntry?, error: NSError?) {
         
-        if error == nil {
-            
+        if let address = address {
             currentAddress = address
             updateLocationCardUI(address)
         }
-        else {
-            print(error!)
+        else if let error = error {
+            print(error)
         }
 
     }
     
     func smartLocationChange(location: LocationEntry?, error: NSError?) {
         
-        if error == nil {
+        if let location = location {
             currentLocation = location
         }
-        else {
-            print(error!)
+        else if let error = error {
+            print(error)
         }
     }
     
+    func smartPlacesChange(places: [PlaceEntry]?, error: NSError?) {
+        
+        if let places = places {
+            currentPlaces = places
+            updatePlaceCardUIs(places)
+        }
+        else if let error = error {
+            print(error)
+        }
+        
+    }
+
     func smartWeatherChange(weather: WeatherEntry?, error: NSError?) {
         
-        if error == nil {
-            
+        if let weather = weather {
             updateWeatherCardUIs(weather)
             currentWeather = weather
         }
-        else {
-            print(error!)
+        else if let error = error {
+            print(error)
         }
     }
     
@@ -601,6 +884,176 @@ class TableViewController: UITableViewController, TrnqlDelegate {
             
             
         }
+    }
+    
+    
+    @IBAction func showSmartPlaceRestaurantDataset(sender: UIButton) {
+
+        var dataset = [String]()
+        
+        dataset.append(currentRestaurant?.getName() ?? "-")
+        dataset.append(currentRestaurant?.getAddress() ?? "-")
+        dataset.append(currentRestaurant?.getPhoneNumber() ?? "-")
+        
+        if let lat = currentRestaurant?.getLatitude() {
+            dataset.append("\(lat)")
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        if let lon = currentRestaurant?.getLongitude() {
+            dataset.append("\(lon)")
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        dataset.append(currentRestaurant?.getIntlPhoneNumber() ?? "-")
+        
+        if let rating = currentRestaurant?.getRating() {
+            dataset.append("\(rating)")
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        if let val = currentRestaurant?.getPriceLevel() {
+            dataset.append("\(val)")
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        if let val = currentRestaurant?.getReviews() where val.count > 0 {
+            for review in val {
+                dataset.append("\(review.getText() ?? "-")")
+            }
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        if let tags = currentRestaurant?.getTypes() where tags.count > 0 {
+            dataset.append(tags.map { $0.rawValue }.joinWithSeparator(", "))
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        dataset.append(currentRestaurant?.getGoogleMapsURL() ?? "-")
+        dataset.append(currentRestaurant?.getVicinity() ?? "-")
+        dataset.append(currentRestaurant?.getWebsite() ?? "-")
+//        dataset.append(currentRestaurant?.getOpenHoursString())
+        
+        dataset.append("Learn how at trnql.com/guides")
+        
+        if let vc = self.storyboard?.instantiateViewControllerWithIdentifier("DatasetTableViewController") as? DatasetTableViewController {
+            vc.dataset = dataset
+            if let restaurantName = currentRestaurant?.getName() {
+                vc.title = "\(restaurantName) Data"
+            }
+            else {
+                vc.title = "Restaurant Data"
+            }
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    @IBAction func showSmartPlaceOtherDataset(sender: UIButton) {
+        
+        var dataset = [String]()
+
+        dataset.append(currentOtherPOI?.getName() ?? "-")
+        dataset.append(currentOtherPOI?.getAddress() ?? "-")
+        dataset.append(currentOtherPOI?.getPhoneNumber() ?? "-")
+        
+        if let lat = currentOtherPOI?.getLatitude() {
+            dataset.append("\(lat)")
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        if let lon = currentOtherPOI?.getLongitude() {
+            dataset.append("\(lon)")
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        dataset.append(currentOtherPOI?.getIntlPhoneNumber() ?? "-")
+        
+        if let rating = currentOtherPOI?.getRating() {
+            dataset.append("\(rating)")
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        if let val = currentOtherPOI?.getPriceLevel() {
+            dataset.append("\(val)")
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        if let val = currentOtherPOI?.getReviews() where val.count > 0 {
+            for review in val {
+                dataset.append("\(review.getText() ?? "-")")
+            }
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        if let tags = currentOtherPOI?.getTypes() where tags.count > 0 {
+            dataset.append(tags.map { $0.rawValue }.joinWithSeparator(", "))
+        }
+        else {
+            dataset.append("-")
+        }
+        
+        dataset.append(currentOtherPOI?.getGoogleMapsURL() ?? "-")
+        dataset.append(currentOtherPOI?.getVicinity() ?? "-")
+        dataset.append(currentOtherPOI?.getWebsite() ?? "-")
+//        dataset.append(currentOtherPOI?.getOpenHoursString() ?? "-")
+        
+        dataset.append("Learn how at trnql.com/guides")
+        
+        if let vc = self.storyboard?.instantiateViewControllerWithIdentifier("DatasetTableViewController") as? DatasetTableViewController {
+            vc.dataset = dataset
+            if let poiName = currentOtherPOI?.getName() {
+                vc.title = "\(poiName) Data"
+            }
+            else {
+                vc.title = "POI Data"
+            }
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    @IBAction func showSmartPlacesAllPlacesNames(sender: UIButton) {
+        
+        var dataset = [String]()
+        
+        if let places = currentPlaces {
+            for place in places {
+                dataset.append(place.getName() ?? "-")
+            }
+        }
+        
+        dataset.append("Learn how at trnql.com/guides")
+        
+        if let vc = self.storyboard?.instantiateViewControllerWithIdentifier("DatasetTableViewController") as? DatasetTableViewController {
+            vc.dataset = dataset
+            vc.title = "Places Dataset"
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
     }
     
     @IBAction func dismissSplashScreen(segue:UIStoryboardSegue) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wmS-3l-9DA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wmS-3l-9DA">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -295,10 +295,228 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Places" id="fzw-qW-8KB">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="45" id="yIY-ol-c62">
+                                        <rect key="frame" x="0.0" y="407" width="375" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yIY-ol-c62" id="EhV-oL-rLj">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPl-In-Sj3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="377" height="44"/>
+                                                    <animations/>
+                                                    <state key="normal" title="Searching For Nearby Places"/>
+                                                    <connections>
+                                                        <action selector="showSmartPlacesAllPlacesNames:" destination="SaW-hz-i4c" eventType="touchUpInside" id="4Eb-aw-Mdi"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="PPl-In-Sj3" firstAttribute="centerY" secondItem="EhV-oL-rLj" secondAttribute="centerY" id="26M-XK-BJO"/>
+                                                <constraint firstItem="PPl-In-Sj3" firstAttribute="centerX" secondItem="EhV-oL-rLj" secondAttribute="centerX" id="5rt-CJ-aF8"/>
+                                                <constraint firstItem="PPl-In-Sj3" firstAttribute="leading" secondItem="EhV-oL-rLj" secondAttribute="leading" id="AG8-te-ePj"/>
+                                                <constraint firstAttribute="trailing" secondItem="PPl-In-Sj3" secondAttribute="trailing" constant="-35" id="Mgy-zl-TeR"/>
+                                                <constraint firstAttribute="bottom" secondItem="PPl-In-Sj3" secondAttribute="bottom" id="g8d-Hy-Mzj"/>
+                                                <constraint firstItem="PPl-In-Sj3" firstAttribute="top" secondItem="EhV-oL-rLj" secondAttribute="top" id="iDU-ym-x3N"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="26M-XK-BJO"/>
+                                                    <exclude reference="5rt-CJ-aF8"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="300" id="KQ8-Wo-Wg5">
+                                        <rect key="frame" x="0.0" y="452" width="375" height="300"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KQ8-Wo-Wg5" id="uNk-JG-k8r">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="299"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cutlery22" translatesAutoresizingMaskIntoConstraints="NO" id="VsL-4O-wPV">
+                                                    <rect key="frame" x="28" y="60" width="151" height="151"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="151" id="95f-x1-iW0"/>
+                                                        <constraint firstAttribute="height" constant="151" id="shT-jv-t25"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restaurant Name" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="RJx-GM-qS5">
+                                                    <rect key="frame" x="15" y="15" width="119" height="18"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching for places..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lla-jt-18N">
+                                                    <rect key="frame" x="111" y="246" width="153" height="18"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cutlery22" translatesAutoresizingMaskIntoConstraints="NO" id="mYF-Av-PI9">
+                                                    <rect key="frame" x="196" y="60" width="151" height="151"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="151" id="4ES-zD-wka"/>
+                                                        <constraint firstAttribute="height" constant="151" id="50I-jp-y4w"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cutlery22" translatesAutoresizingMaskIntoConstraints="NO" id="PjV-Uj-m0g">
+                                                    <rect key="frame" x="112" y="60" width="151" height="151"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="151" id="DK6-Sk-vn6"/>
+                                                        <constraint firstAttribute="width" constant="151" id="OAu-KG-T9I"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yt2-lV-lsF">
+                                                    <rect key="frame" x="195" y="267" width="172" height="27"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <state key="normal" title="See Full SmartPlace Dataset &gt;">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showSmartPlaceRestaurantDataset:" destination="SaW-hz-i4c" eventType="touchUpInside" id="ght-Xa-S0e"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="4UW-Tn-abm">
+                                                    <rect key="frame" x="300" y="15" width="60" height="18"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="lla-jt-18N" firstAttribute="centerX" secondItem="uNk-JG-k8r" secondAttribute="centerX" id="1fl-BW-lJO"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lla-jt-18N" secondAttribute="trailing" constant="15" id="4ZE-Qc-HlF"/>
+                                                <constraint firstItem="VsL-4O-wPV" firstAttribute="top" secondItem="uNk-JG-k8r" secondAttribute="top" constant="60" id="AiN-2L-ntZ"/>
+                                                <constraint firstItem="VsL-4O-wPV" firstAttribute="centerX" secondItem="uNk-JG-k8r" secondAttribute="centerX" constant="-84" id="DJ8-Eg-Fj4"/>
+                                                <constraint firstItem="mYF-Av-PI9" firstAttribute="top" secondItem="VsL-4O-wPV" secondAttribute="top" id="DVj-9Z-bSs"/>
+                                                <constraint firstItem="RJx-GM-qS5" firstAttribute="leading" secondItem="uNk-JG-k8r" secondAttribute="leading" constant="15" id="DZu-3F-pMA"/>
+                                                <constraint firstItem="4UW-Tn-abm" firstAttribute="centerY" secondItem="RJx-GM-qS5" secondAttribute="centerY" id="Kfv-YM-8Xs"/>
+                                                <constraint firstItem="lla-jt-18N" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uNk-JG-k8r" secondAttribute="leading" constant="15" id="MwK-T9-3ka"/>
+                                                <constraint firstItem="lla-jt-18N" firstAttribute="top" secondItem="VsL-4O-wPV" secondAttribute="bottom" constant="35" id="NvU-K8-z0N"/>
+                                                <constraint firstItem="RJx-GM-qS5" firstAttribute="top" secondItem="uNk-JG-k8r" secondAttribute="top" constant="15" id="Pzx-AS-zbG"/>
+                                                <constraint firstAttribute="bottom" secondItem="yt2-lV-lsF" secondAttribute="bottom" constant="5" id="UNu-Yq-7Dj"/>
+                                                <constraint firstAttribute="trailing" secondItem="yt2-lV-lsF" secondAttribute="trailing" constant="8" id="c4P-2S-yhR"/>
+                                                <constraint firstItem="4UW-Tn-abm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RJx-GM-qS5" secondAttribute="trailing" constant="15" id="eI4-rU-9hz"/>
+                                                <constraint firstAttribute="trailing" secondItem="4UW-Tn-abm" secondAttribute="trailing" constant="15" id="eJS-ko-mjN"/>
+                                                <constraint firstItem="PjV-Uj-m0g" firstAttribute="centerX" secondItem="uNk-JG-k8r" secondAttribute="centerX" id="eka-su-vS4"/>
+                                                <constraint firstItem="PjV-Uj-m0g" firstAttribute="top" secondItem="VsL-4O-wPV" secondAttribute="top" id="hnZ-Yq-1qT"/>
+                                                <constraint firstItem="mYF-Av-PI9" firstAttribute="centerX" secondItem="uNk-JG-k8r" secondAttribute="centerX" constant="84" id="iND-me-umj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="300" id="uAH-k0-gkr">
+                                        <rect key="frame" x="0.0" y="752" width="375" height="300"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uAH-k0-gkr" id="omv-3R-HdH">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="299"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cutlery22" translatesAutoresizingMaskIntoConstraints="NO" id="aVd-58-phX">
+                                                    <rect key="frame" x="28" y="60" width="151" height="151"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="151" id="Sse-Rf-UHt"/>
+                                                        <constraint firstAttribute="height" constant="151" id="zwu-Kp-oqg"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POI Name" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="dMe-Mt-oie">
+                                                    <rect key="frame" x="15" y="15" width="69" height="18"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching for places..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghl-qZ-wNk">
+                                                    <rect key="frame" x="111" y="246" width="153" height="18"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cutlery22" translatesAutoresizingMaskIntoConstraints="NO" id="sgp-0q-9FZ">
+                                                    <rect key="frame" x="196" y="60" width="151" height="151"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="151" id="Upm-zR-huO"/>
+                                                        <constraint firstAttribute="width" constant="151" id="ztS-B7-h05"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cutlery22" translatesAutoresizingMaskIntoConstraints="NO" id="bKG-O8-CJ1">
+                                                    <rect key="frame" x="112" y="60" width="151" height="151"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="151" id="5qE-uh-Xia"/>
+                                                        <constraint firstAttribute="height" constant="151" id="sKc-zk-E0o"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNT-DE-JaA">
+                                                    <rect key="frame" x="195" y="267" width="172" height="27"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <state key="normal" title="See Full SmartPlace Dataset &gt;">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showSmartPlaceOtherDataset:" destination="SaW-hz-i4c" eventType="touchUpInside" id="ZkU-by-x74"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POI Distance" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="ZEX-aU-Utc">
+                                                    <rect key="frame" x="271" y="15" width="89" height="18"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="ghl-qZ-wNk" firstAttribute="centerX" secondItem="omv-3R-HdH" secondAttribute="centerX" id="24O-CO-Odt"/>
+                                                <constraint firstItem="BNT-DE-JaA" firstAttribute="top" secondItem="omv-3R-HdH" secondAttribute="top" constant="10" id="34T-WV-aGj"/>
+                                                <constraint firstItem="aVd-58-phX" firstAttribute="top" secondItem="omv-3R-HdH" secondAttribute="top" constant="60" id="36H-ZT-5cj"/>
+                                                <constraint firstItem="ZEX-aU-Utc" firstAttribute="centerY" secondItem="dMe-Mt-oie" secondAttribute="centerY" id="3N8-XG-dkl"/>
+                                                <constraint firstItem="dMe-Mt-oie" firstAttribute="top" secondItem="omv-3R-HdH" secondAttribute="top" constant="15" id="B5q-qD-ZgC"/>
+                                                <constraint firstAttribute="trailing" secondItem="BNT-DE-JaA" secondAttribute="trailing" constant="8" id="I3i-zz-1fm"/>
+                                                <constraint firstItem="bKG-O8-CJ1" firstAttribute="top" secondItem="aVd-58-phX" secondAttribute="top" id="Ofm-GY-tqO"/>
+                                                <constraint firstItem="sgp-0q-9FZ" firstAttribute="top" secondItem="aVd-58-phX" secondAttribute="top" id="RR5-g4-ahD"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ghl-qZ-wNk" secondAttribute="trailing" constant="15" id="Tma-XZ-VdD"/>
+                                                <constraint firstItem="ghl-qZ-wNk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="omv-3R-HdH" secondAttribute="leading" constant="15" id="TpZ-Zt-404"/>
+                                                <constraint firstItem="ZEX-aU-Utc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dMe-Mt-oie" secondAttribute="trailing" constant="15" id="hoF-1L-KE2"/>
+                                                <constraint firstAttribute="bottom" secondItem="BNT-DE-JaA" secondAttribute="bottom" constant="5" id="ihO-zB-yWH"/>
+                                                <constraint firstItem="dMe-Mt-oie" firstAttribute="leading" secondItem="omv-3R-HdH" secondAttribute="leading" constant="15" id="ndE-E0-A8l"/>
+                                                <constraint firstItem="bKG-O8-CJ1" firstAttribute="centerX" secondItem="omv-3R-HdH" secondAttribute="centerX" id="nxS-Wg-vkd"/>
+                                                <constraint firstItem="sgp-0q-9FZ" firstAttribute="centerX" secondItem="omv-3R-HdH" secondAttribute="centerX" constant="84" id="oBd-pr-s7v"/>
+                                                <constraint firstAttribute="trailing" secondItem="ZEX-aU-Utc" secondAttribute="trailing" constant="15" id="sLO-uI-mVu"/>
+                                                <constraint firstItem="ghl-qZ-wNk" firstAttribute="top" secondItem="aVd-58-phX" secondAttribute="bottom" constant="35" id="yL1-7W-u5z"/>
+                                                <constraint firstItem="aVd-58-phX" firstAttribute="centerX" secondItem="omv-3R-HdH" secondAttribute="centerX" constant="-84" id="yV9-oR-8Pw"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="34T-WV-aGj"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Weather" id="yBQ-3q-QYU">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="wSY-7g-eJt">
-                                        <rect key="frame" x="0.0" y="407" width="375" height="114"/>
+                                        <rect key="frame" x="0.0" y="1086" width="375" height="114"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wSY-7g-eJt" id="Jae-y5-IMm">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="113"/>
@@ -358,7 +576,7 @@
                             <tableViewSection id="tnj-Qo-6BH">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="vqR-lf-lRe">
-                                        <rect key="frame" x="0.0" y="523" width="375" height="114"/>
+                                        <rect key="frame" x="0.0" y="1202" width="375" height="114"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vqR-lf-lRe" id="LEP-sk-WWN">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="113"/>
@@ -426,9 +644,22 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="currentAddressLabel" destination="kh2-2I-00V" id="jFG-kQ-n8y"/>
+                        <outlet property="foodImageCenter" destination="PjV-Uj-m0g" id="xuG-no-G3J"/>
+                        <outlet property="foodImageLeft" destination="VsL-4O-wPV" id="BJ9-be-La5"/>
+                        <outlet property="foodImageRight" destination="mYF-Av-PI9" id="gKe-ur-9Op"/>
+                        <outlet property="gasImageCenter" destination="bKG-O8-CJ1" id="Y6b-nJ-BiW"/>
+                        <outlet property="gasImageLeft" destination="aVd-58-phX" id="u9n-5v-XNd"/>
+                        <outlet property="gasImageRight" destination="sgp-0q-9FZ" id="ZgR-E2-epL"/>
                         <outlet property="keyboardInputTextField" destination="gX4-I5-zJx" id="VlK-aE-p98"/>
                         <outlet property="locationImageIcon" destination="vEQ-ay-8ZI" id="pKf-Mo-d39"/>
+                        <outlet property="numberOfPlacesFound" destination="PPl-In-Sj3" id="4qt-oC-XPC"/>
+                        <outlet property="poiAddressLabel" destination="ghl-qZ-wNk" id="P9t-KZ-B8z"/>
+                        <outlet property="poiDistanceLabel" destination="ZEX-aU-Utc" id="4uf-j9-VNj"/>
+                        <outlet property="poiNameLabel" destination="dMe-Mt-oie" id="rdn-Av-ZMQ"/>
                         <outlet property="resetSavedLocationButton" destination="doY-Cg-MRl" id="Xyw-eo-XjJ"/>
+                        <outlet property="restaurantAddressLabel" destination="lla-jt-18N" id="3E5-JE-QeB"/>
+                        <outlet property="restaurantDistanceLabel" destination="4UW-Tn-abm" id="Xiu-x7-9tZ"/>
+                        <outlet property="restaurantNameLabel" destination="RJx-GM-qS5" id="Xt2-uG-MUc"/>
                         <outlet property="saveLocationPromptLabel" destination="sDS-QN-ryM" id="GNV-LU-y9C"/>
                         <outlet property="savePlaceButtonsContainerView" destination="K5Q-hd-XhW" id="wGO-iV-xM2"/>
                         <outlet property="sunriseSunsetTimeLabel" destination="JfQ-eg-Qbm" id="xV2-jg-CpD"/>
@@ -512,7 +743,6 @@
         <scene sceneID="uhl-ms-ABl">
             <objects>
                 <navigationController id="CjH-YG-vB6" sceneMemberID="viewController">
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="diL-TF-m40">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -528,6 +758,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="cutlery22" width="170" height="170"/>
         <image name="keyboard" width="170" height="170"/>
         <image name="keyline" width="2100" height="12"/>
         <image name="placemark" width="170" height="170"/>

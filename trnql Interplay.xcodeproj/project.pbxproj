@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		420664B91BF671D6009B28EE /* trnql.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420664B81BF671D6009B28EE /* trnql.framework */; };
+		420664BA1BF671D6009B28EE /* trnql.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 420664B81BF671D6009B28EE /* trnql.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		423124D51B7BF2A500533E2E /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423124D41B7BF2A500533E2E /* TableViewController.swift */; };
 		426F959A1B82A6740075E7F3 /* DatasetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F95991B82A6740075E7F3 /* DatasetTableViewController.swift */; };
 		42C6159E1BA0ED56003632CF /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C6159D1BA0ED56003632CF /* SwiftyJSON.swift */; };
-		42E48B231BD706E000AFE55B /* trnql.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E48B221BD706E000AFE55B /* trnql.framework */; };
-		42E48B241BD706E000AFE55B /* trnql.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42E48B221BD706E000AFE55B /* trnql.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		42F8AC741B792FB5001E152C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F8AC731B792FB5001E152C /* AppDelegate.swift */; };
 		42F8AC791B792FB5001E152C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42F8AC771B792FB5001E152C /* Main.storyboard */; };
 		42F8AC7B1B792FB5001E152C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42F8AC7A1B792FB5001E152C /* Images.xcassets */; };
@@ -36,7 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				42E48B241BD706E000AFE55B /* trnql.framework in Embed Frameworks */,
+				420664BA1BF671D6009B28EE /* trnql.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,10 +44,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		420664B81BF671D6009B28EE /* trnql.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = trnql.framework; sourceTree = "<group>"; };
 		423124D41B7BF2A500533E2E /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		426F95991B82A6740075E7F3 /* DatasetTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatasetTableViewController.swift; sourceTree = "<group>"; };
 		42C6159D1BA0ED56003632CF /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		42E48B221BD706E000AFE55B /* trnql.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = trnql.framework; sourceTree = "<group>"; };
 		42F8AC6E1B792FB5001E152C /* trnql Interplay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "trnql Interplay.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F8AC721B792FB5001E152C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42F8AC731B792FB5001E152C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42E48B231BD706E000AFE55B /* trnql.framework in Frameworks */,
+				420664B91BF671D6009B28EE /* trnql.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +81,7 @@
 		42F8AC651B792FB5001E152C = {
 			isa = PBXGroup;
 			children = (
-				42E48B221BD706E000AFE55B /* trnql.framework */,
+				420664B81BF671D6009B28EE /* trnql.framework */,
 				42F8AC701B792FB5001E152C /* trnql Interplay */,
 				42F8AC861B792FB5001E152C /* trnql InterplayTests */,
 				42F8AC6F1B792FB5001E152C /* Products */,
