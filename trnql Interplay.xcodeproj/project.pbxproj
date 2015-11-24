@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		420664B91BF671D6009B28EE /* trnql.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 420664B81BF671D6009B28EE /* trnql.framework */; };
-		420664BA1BF671D6009B28EE /* trnql.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 420664B81BF671D6009B28EE /* trnql.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		423124D51B7BF2A500533E2E /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423124D41B7BF2A500533E2E /* TableViewController.swift */; };
+		425C05CC1BFFA6E0003F5743 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425C05CB1BFFA6E0003F5743 /* ViewController.swift */; };
 		426F959A1B82A6740075E7F3 /* DatasetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F95991B82A6740075E7F3 /* DatasetTableViewController.swift */; };
 		42C6159E1BA0ED56003632CF /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C6159D1BA0ED56003632CF /* SwiftyJSON.swift */; };
+		42F23E3A1C0145AB006B417C /* PersonMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F23E391C0145AB006B417C /* PersonMapAnnotation.swift */; };
+		42F23E421C017767006B417C /* trnql.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F23E411C017767006B417C /* trnql.framework */; };
+		42F23E431C017767006B417C /* trnql.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42F23E411C017767006B417C /* trnql.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		42F8AC741B792FB5001E152C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F8AC731B792FB5001E152C /* AppDelegate.swift */; };
 		42F8AC791B792FB5001E152C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42F8AC771B792FB5001E152C /* Main.storyboard */; };
 		42F8AC7B1B792FB5001E152C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42F8AC7A1B792FB5001E152C /* Images.xcassets */; };
@@ -36,7 +37,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				420664BA1BF671D6009B28EE /* trnql.framework in Embed Frameworks */,
+				42F23E431C017767006B417C /* trnql.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,10 +45,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		420664B81BF671D6009B28EE /* trnql.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = trnql.framework; sourceTree = "<group>"; };
-		423124D41B7BF2A500533E2E /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		425C05CB1BFFA6E0003F5743 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		426F95991B82A6740075E7F3 /* DatasetTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatasetTableViewController.swift; sourceTree = "<group>"; };
 		42C6159D1BA0ED56003632CF /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		42F23E391C0145AB006B417C /* PersonMapAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonMapAnnotation.swift; sourceTree = "<group>"; };
+		42F23E411C017767006B417C /* trnql.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = trnql.framework; sourceTree = "<group>"; };
 		42F8AC6E1B792FB5001E152C /* trnql Interplay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "trnql Interplay.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F8AC721B792FB5001E152C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42F8AC731B792FB5001E152C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				420664B91BF671D6009B28EE /* trnql.framework in Frameworks */,
+				42F23E421C017767006B417C /* trnql.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +83,7 @@
 		42F8AC651B792FB5001E152C = {
 			isa = PBXGroup;
 			children = (
-				420664B81BF671D6009B28EE /* trnql.framework */,
+				42F23E411C017767006B417C /* trnql.framework */,
 				42F8AC701B792FB5001E152C /* trnql Interplay */,
 				42F8AC861B792FB5001E152C /* trnql InterplayTests */,
 				42F8AC6F1B792FB5001E152C /* Products */,
@@ -102,7 +104,8 @@
 			children = (
 				42C6159D1BA0ED56003632CF /* SwiftyJSON.swift */,
 				42F8AC731B792FB5001E152C /* AppDelegate.swift */,
-				423124D41B7BF2A500533E2E /* TableViewController.swift */,
+				425C05CB1BFFA6E0003F5743 /* ViewController.swift */,
+				42F23E391C0145AB006B417C /* PersonMapAnnotation.swift */,
 				426F95991B82A6740075E7F3 /* DatasetTableViewController.swift */,
 				42F8AC771B792FB5001E152C /* Main.storyboard */,
 				42F8AC7A1B792FB5001E152C /* Images.xcassets */,
@@ -258,8 +261,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42F23E3A1C0145AB006B417C /* PersonMapAnnotation.swift in Sources */,
+				425C05CC1BFFA6E0003F5743 /* ViewController.swift in Sources */,
 				426F959A1B82A6740075E7F3 /* DatasetTableViewController.swift in Sources */,
-				423124D51B7BF2A500533E2E /* TableViewController.swift in Sources */,
 				42F8AC741B792FB5001E152C /* AppDelegate.swift in Sources */,
 				42C6159E1BA0ED56003632CF /* SwiftyJSON.swift in Sources */,
 			);
